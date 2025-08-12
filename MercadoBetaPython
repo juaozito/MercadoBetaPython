@@ -1,0 +1,85 @@
+produtos = []
+categorias = []
+
+while True:
+    print("Seja bem-vindo(a) ao sistema do Supermercado Beta! \nPor favor, selecione uma opção:")
+
+    print("\n- TELA INICIAL -")
+    print("1. Iniciar Programa")
+    print("2. Fechar Programa")
+
+    com = input("\nOpção: ")
+
+    if com == '1':
+        while True:
+            print("\n- TELA DO SUPERMERCADO BETA -")
+            print("1. Cadastrar Produto")
+            print("2. Visualizar Lista de Produtos")
+            print("3. Ver Categorias")
+            print("4. Voltar para Tela Inicial")
+
+            op = input("\nEscolha uma opção: ")
+
+            if op == '1':
+                nome = input("Digite o nome do produto: ")
+                preco = input("Digite o preço do produto: ")
+                categoria = input("Digite a categoria do produto: ")
+                produto = {"nome": nome, "preço": preco, "categoria": categoria}
+                produtos.append(produto)
+
+                if categoria not in categorias:
+                    categorias.append(categoria)
+
+                print("Produto cadastrado com sucesso!")
+
+            elif op == '2':
+                if produtos:
+                    print("\n--- Lista de Produtos ---")
+                    for i, p in enumerate(produtos, 1):
+                        print(f"{i}. {p['nome']} - R$ {p['preço']} ({p['categoria']})")
+                else:
+                    print("\nNenhum produto cadastrado.")
+
+            elif op == '3':
+                if categorias:
+                    print("\n--- Categorias Disponíveis ---")
+                    for i, cat in enumerate(categorias, 1):
+                        print(f"{i}. {cat}")
+
+                    escolha = input("\nDigite o número da categoria que deseja visualizar (ou pressione ENTER para cancelar): ")
+
+                    if escolha.isdigit():
+                        indice = int(escolha) - 1
+                        if 0 <= indice < len(categorias):
+                            categoria_escolhida = categorias[indice]
+                            print(f"\n--- Produtos na categoria '{categoria_escolhida}' ---")
+                            encontrados = False
+                            for p in produtos:
+                                if p["categoria"] == categoria_escolhida:
+                                    print(f"- {p['nome']} - R$ {p['preço']}")
+                                    encontrados = True
+                            if not encontrados:
+                                print("Nenhum produto encontrado nessa categoria.")
+                        else:
+                            print("Número de categoria inválido.")
+                    elif escolha == "":
+                        print("Operação cancelada.")
+                    else:
+                        print("Entrada inválida.")
+
+                else:
+                    print("\nNenhuma categoria cadastrada.")
+
+            elif op == '4':
+                print("\nVoltando para a Tela Inicial...")
+                break
+
+            else:
+                print("Opção inválida. Tente novamente.")
+
+    elif com == '2':
+        print("\nPrograma Finalizado.")
+        break
+
+    else:
+        print("\nOpção inválida. Tente novamente.")
